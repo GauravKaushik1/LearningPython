@@ -1283,12 +1283,14 @@ Pillars of OOPS in Python - Important
         Hiding the implementation details of a class and only showing the essential features to the user.
     Encapsulation
         Wrapping data and functions into a single unit (object).
-                    ____
-                    |OOP|
-    _________________________________________________________
-    |           |                  |                        |
-Abstraction     Encapsulation    Inheritance    Polymorphism
-Hiding unnecessary Details  Make a capsule of data and related function 
+                                    ____
+                                    |OOP|
+        ___________________________________________________________________________________
+        |                                 |                      |                        |
+___Abstraction______________   _____Encapsulation_________   Inheritance           Polymorphism
+|Hiding unnecessary Details|   |Make a capsule of         |
+---------------------------    |data and related function |
+                               ----------------------------
 '''
 
 '''
