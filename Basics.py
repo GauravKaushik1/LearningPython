@@ -555,7 +555,7 @@ print(set2)
 
 print(set1.intersection(set2))
 dictionary ={
-    "table": ["a piece of furniture", "list of facts&figures"]
+    "table": ["a piece of furniture", "list of facts&figures"],
     "cat":"a small animal"
 }
 #unique subject is the classroom so 
@@ -572,7 +572,7 @@ x = int(input("enter maths : "))
 marks.update({"maths":x})
 
 x = int(input("enter chem : "))
-marks.update({}"chem":x})
+marks.update({"chem":x})
 
 print(marks)
 
@@ -626,9 +626,9 @@ while (i < len(heroes)) :
     i += 1
 #search for a number in a tupple using loops
 nums = (1,4,3,16,25,31,43,64,80,100)
-x = 
+x = 16
 i = 0
-while i < len(num):
+while i < len(nums):
     if(nums[i] == x) :
         print("FOUND at index", i)
         break
@@ -686,7 +686,7 @@ str = "apnacollege"
 for char in str:
     print(char)
 for char in str:
-    if(char == '0')
+    if(char == '0'):
         print("o found")
         break
     print("")
@@ -698,11 +698,11 @@ nums = [1,4,3,16,25,31,43,64,80,100]
 for el in nums:
     print(el)
 
- nums= (1,4,3,16,25,31,43,64,80,100)
+nums= (1,4,3,16,25,31,43,64,80,100)
 
 x = 43
 index = 0
-for (el in nums):
+for el in nums:
     if(x == el):
         print(x+" found in the list at :" + index)
         break
@@ -824,7 +824,7 @@ output = print_hello()
 print(output)   #none
 
 def calc_avg(a, b, c):
-    sum = a + b + C
+    sum = a + b + c
     avg = sum / 3
     print(avg)
     return avg
@@ -941,7 +941,7 @@ def print_list(list, index=0):
 
 lists = ["abcd","padthe","hai","aaj"]
 
-print_list(fruits)
+print_list(lists)
 
 '''
 File I/O in Python
@@ -1017,22 +1017,25 @@ ______________________________________________________
 '''
 
 # with Syntax
-    with open("demo.txt", "a") as f:#alias same thing different name
-        data = f.read()
+with open("demo.txt", "a") as f:#alias same thing different name
+    data = f.read()
 
-    with open("demo.txt", "w") as f:
-        f.write("new data")
+with open("demo.txt", "w") as f:
+    f.write("new data")
     
 '''
-Deleting a file - needs a module named os module
-Module (like a code library) is a file written by another programmer that generally has a functions we can use.Some are pre installed not all. so use python's package manager pip install tensorflow, pip3 install tensorflow.
-import os
-os.remove(filename)
-'''
+# Deleting a file - needs a module named os module
+# Module (like a code library) is a file written by another programmer that generally has a functions we can use.
+# Some are pre installed not all. so use python's package manager:
+#  pip install tensorflow,
+#  pip3 install tensorflow.
+# import os
+# os.remove(filename)
+
 # import os
 
 # os.remove("sample.txt")
-
+'''
 
 try:    
     with open("practice.txt","w") as f:
@@ -1093,7 +1096,7 @@ with open("practice.txt", "r") as f:
     To split any string into a list we can use'''
     nums = data.split(",")
     print(nums)
-    for(val in nums):
+    for val in nums:
         if(int(val) % 2 == 0):
             count += 1
 
@@ -1174,23 +1177,35 @@ Best Practices
 use self keyword as the current object reference
 '''
 class Student:
-    # name = "Gaurav Kaushik"
+    # name = "anonymous"
+    # marks = 0
     #default constructors automatically created by python
-    def __init__():
+    def __init__(self):
         pass
-    
+    #parameterized constructor
     def __init__(self, name, marks):# self is always to be called 
         # print(self)
         self.name = name
         self.marks = marks
         print("adding new student")
-
+        # welcome(self)
+    #Method of class or objects
+    def welcome(self):
+        #all methods must have a self parameter for themselves whether in used or not
+        #but static methods are an exception of that
+        print("welcome student,", self.name)
+    def get_marks(self):#getter method
+        return self.marks
 s1 = Student("Gaurav",100)
-
 print(s1.name, s1.marks)
+s1.welcome()
+print(s1.get_marks())
 
 s2 = Student("Kaushik",88)
-print(s2.name, s1.marks)
+print(s2.name, s2.marks)
+s2.welcome()
+print(s2.get_marks)
+
 '''
 Attributes - Class And Instance Attributes
 Class And Instance Attributes
@@ -1211,3 +1226,94 @@ same name class and object attribute then object attribute has a higher preceden
 Methods - functions that belong to objects
 every method of class must have a self parameter
 '''
+'''
+Practice - Create student class that takes name & marks of 3 subjects as arguments in constructor.
+ Then create a method to print the average.
+'''
+#First Attempt
+# class Student:
+#     def __init__(self, name, eng, science, math):
+#         self.name = name
+#         self.eng = eng
+#         self.science = science
+#         self.math = math
+#     def print_avg(self):
+#         self.avg = (self.eng + self.science + self.math)/3
+#         print("the average marks obtained is : ", self.avg)
+
+# s1 = Student("Gauav Kaushik", 100, 100, 100)
+# s1.print_avg()
+
+#Better Attempt
+class Student:
+    def __init__(self, name, marks):
+        self.name = name
+        self.marks = marks
+    @staticmethod
+    def hello():
+        print("This is a static method hello without any self parameter. made using decorator @staticmethod")
+    def get_avg(self):
+        sum = 0
+        for val in self.marks:
+            sum += val
+        avg = sum/len(self.marks)
+        print("hi ", self.name, ", your avg score is:", avg)
+    
+
+s1 = Student("Gaurav Kaushik", [88, 80, 88])#passed the parameters as a list
+s1.get_avg()
+s1.hello()
+
+s1.name = "Kaushik Gaurav"
+s1.get_avg()
+'''
+Static Methods- Methods that don't use the self parameter (work at class level)
+class Student:
+    @staticmethod#decorator
+    def college():
+        print("ABC College")
+
+*Decorators allow us to wrap another function in order to extend the behaviour of the wrapped function, without permanently modifing it
+'''
+
+'''
+#IMPORTANT
+Pillars of OOPS in Python - Important
+    Abstraction
+        Hiding the implementation details of a class and only showing the essential features to the user.
+    Encapsulation
+        Wrapping data and functions into a single unit (object).
+                    ____
+                    |OOP|
+    _________________________________________________________
+    |           |                  |                        |
+Abstraction     Encapsulation    Inheritance    Polymorphism
+Hiding unnecessary Details  Make a capsule of data and related function 
+'''
+
+'''
+Practice Create Account class with 2 attributes - balance & account no.
+Create methods for debit, credit & printing the balance.
+'''
+# class Account:
+#     balance = 0
+#     accountno = 1234
+#     def debit(self, amt):
+#         self.balance = self.balance + amt
+#     def credit(self, amt):
+#         self.balance = self.balance - amt
+#     def print_balance(self):
+#         print("your account balance is : ", self.balance)
+
+class Account:
+    def __init__(self, bal, acc):
+        self.balance = bal
+        self.account_no = acc
+    #debit method
+    def debit(self, amount):
+        self.balance -= amount
+        print("Rs. ", amount, "was debited")
+    
+acc1 = Account(10000, 12345)
+print(acc1.balance)
+print(acc1.account_no)
