@@ -1226,10 +1226,7 @@ same name class and object attribute then object attribute has a higher preceden
 Methods - functions that belong to objects
 every method of class must have a self parameter
 '''
-'''
-Practice - Create student class that takes name & marks of 3 subjects as arguments in constructor.
- Then create a method to print the average.
-'''
+
 #First Attempt
 # class Student:
 #     def __init__(self, name, eng, science, math):
@@ -1293,10 +1290,7 @@ ___Abstraction______________   _____Encapsulation_________   Inheritance        
                                ----------------------------
 '''
 
-'''
-Practice Create Account class with 2 attributes - balance & account no.
-Create methods for debit, credit & printing the balance.
-'''
+
 # class Account:
 #     balance = 0
 #     accountno = 1234
@@ -1317,5 +1311,398 @@ class Account:
         print("Rs. ", amount, "was debited")
     
 acc1 = Account(10000, 12345)
+acc1.debit(1000)
+acc1.credit(500)
+acc1.credit(50000)
 print(acc1.balance)
 print(acc1.account_no)
+'''
+del keyword - Delete object or object properties
+del s1.name
+del s1
+'''
+
+# class Student:
+#     def __init__(self, name):
+#         self.name = name
+
+# s1 = Student("Gaurav")
+
+# print(s1.name)
+# del s1.name
+# print(s1)
+# print(s1.name)
+
+'''
+Private(like) attributes & methods
+Conceptual Implementations in Python
+Private attributes & methods are meant to be used only within the class and are not accessible from outside the class.
+    OOPS
+        Public - nonSensitive info that can be accessed using the dot method to the object
+        Private - Sensitive info keept here not acessible directly through object using dot method.
+
+'''
+class Account:
+    def __init__(self, acc_no, acc_pass):
+        self.acc_no = acc_no
+        self.__acc_pass = acc_pass#using two underscore as the prefix to make the variable acc_pass private and not accessible directly
+    def reset_pass(self):
+        print(self.__acc_pass)
+
+acc1 = Account("12345", "abcde")
+
+print(acc1.acc_no)
+print(acc1.acc_pass)#will show error
+
+'''
+Not exact private
+'''
+class Person:
+    __name = "anonymous"
+    
+
+    def __hello(self, name):#to be accessed internally by some other function usefull to hide business logic and its access protection for security
+        print("hello person!")
+    def welcome(self):
+        self.__hello(self.name)
+
+p1 = Person()
+
+
+print(p1.__hello())
+
+print(p1.welcome())
+
+'''
+Inheritance
+When one class(child/derived) derives the properties & methods of another class(parent/base).
+class Car:
+    ...
+class ToyotaCar( Car ):
+    ...
+start()
+
+stop()
+color
+'''
+
+'''
+Inheritance
+    types
+    Single Inheritance
+    Multi-level Inheritance
+    Multiple Inheritance
+'''
+'''
+Single Inheritance
+'''
+class Car:
+    color = "black"
+    @staticmethod
+    def start():
+        print("Car started..")
+    @staticmethod
+    def stop():
+        print("Car stopped.")
+
+class ToyotaCar(Car):
+    def __init__(self, name):
+        self.name = name
+
+car1 = ToyotaCar("fortuner")
+car2 = ToyotaCar("prius")
+
+
+
+print(car1.start())
+print(car1.color)
+
+'''
+Mult-level Inheritance
+'''
+
+class Car:
+    color = "black"
+    @staticmethod
+    def start():
+        print("Car started..")
+    @staticmethod
+    def stop():
+        print("Car stopped.")
+
+class ToyotaCar(Car):
+    def __init__(self, brand):
+        self.brand = brand
+
+class Fortuner(ToyotaCar):
+    def __init__(self, Type):
+        self.Type = Type
+
+car1 = Fortuner("diesel")
+car1.start()
+
+'''
+Multiple Inheritance
+'''
+class A:
+    varA = "Welcome to class A"
+
+class B:
+    varB = "Welcome to class B"
+
+class C(A,B):
+    varC = "Welcome to class C"
+
+c1 = C()
+
+print(c1.varA)
+print(c1.varB)
+print(c1.varC)
+
+'''
+Super method
+super() method is used to access methods of the parent class.
+'''
+class Car:
+    def __init__(self, type):
+        self.type = type
+    
+    @staticmethod
+    def start():
+        print("Car started..")
+    
+    @staticmethod
+    def stop():
+        print("car stopped.")
+    
+class ToyotaCar(Car):
+    def __init__(self, name,type):
+        super().__init__(type)
+        self.name = name
+        super().start()
+
+car1 = ToyotaCar("prius", "electric")
+print(car1.type)
+
+
+'''
+class method
+A class method is bound to the class & receives the class as an implicit first argument.
+
+Note - static method can't access or modify class state & generally for utility.
+
+class Student:
+    @classmethod #decorator
+    def college(cls):
+        pass
+
+'''
+class Person:
+    name = "anonymous"
+    
+    # def changename(self, name):
+    #     Person.name = name#change name variable for the Person class
+    #     self.__class__.name = "Rahul"
+    @classmethod
+    def changeName(cls, name):
+        cls.name = name
+
+p1 = Person()
+p1.changename("rahul kumar")
+print(p1.name)
+print(Person.name)
+'''
+static method - where the class properties and methods are not to be used
+class method - where the class properties or methods to be used and are not specific to objects
+object method - where the class properties or methods to object are to be changed or used
+'''
+
+'''
+Property decorator
+We use @property decorator on any method in the class to use the method as a property.
+'''
+
+class Student:
+    def __init__(self, phy, chem, math):
+        self.phy = phy
+        self.chem = chem
+        self.math = math
+        #another way to do the calculatePercentage on value updates automatically
+    @property
+    def percentage(self):
+        return (str( (self.phy + self.chem + self.math) / 3 ) + "%" )
+    
+    #other ways
+    # self.percentage = (str( (self.phy + self.chem + self.math) / 3 ) + "%" )#does not change on marks change only set on the initial values
+    
+    # def calculatePercentage(self):
+    #     self.percentage = (str( (self.phy + self.chem + self.math) / 3 ) + "%" )
+    
+stu1 = Student(86,87,88)
+print(stu1.percentage)
+
+stu1.phy = 86
+print(stu1.phy)
+print(stu1.percentage)
+
+'''
+Polymorphism: Operator Overloading
+When the same operator is allowed to have different meaning according to the context.
+Operators & Dunder functions
+a+b #addition           a.__add__(b)
+a-b #subraction         a._sub__(b)
+a*b #multiplication     a.__mul___(b)
+a/b #division           a.__truediv____(b)
+a%b #modlus             a.__mod____(b)
+
+'''
+
+'''
+Implicit overloading - operator overloading defined in a class
+'''
+print(1+2) #sum or adding #3
+print(type(1))
+print("Gaurav"+"Kaushik") #concatenate #GauravKaushik
+print(type("Gaurav"))
+print([1,2,3] + [4,5,6]) #merge lists #[1,2,3,4,5,6]
+print(type([1,2,3]))
+
+'''
+Complex numbers 
+    Real numbers - 1,2,3,-5,3.74
+    Imaginary numbers - 1+2 = 3
+    1i +3j
+  + 2i + 5j
+  -------------
+    3i + 8j
+  _____________
+'''
+class Complex:
+    '''For cpp style operator overloading via creation of object without parameter passing
+    '''
+    #one may make default constructor and then use the normal parameterized consturctor to initialize if needed just in case
+    # def __init__(self):
+    #     self.real = 0
+    #     self.img = 0
+    # def __init__(self, real, img):
+    #     self.real = real
+    #     self.img = img
+    '''
+    #for cpp style operator overloading adding default value parameters
+    '''
+    def __init__(self, real = 0, img = 0):
+        self.real = real
+        self.img = img
+    
+    def showNumber(self):
+        print(self.real, "i + ", self.img, "j")
+
+    # def add(self, num2):
+    #     newReal = self.real + num2.real
+    #     newImg = self.img + num2.img
+    #     return Complex(newReal, newImg)
+
+    # def __add__(self, num2):#optimized solution
+    #     newReal = self.real + num2.real
+    #     newImg = self.img + num2.img
+    #     return Complex(newReal, newImg)
+
+    #in cpp style overloading
+    def __add__(self, obj):
+        #create Result object of complex class type
+        result = Complex()#create object without values passing
+
+        # #alternatively
+        # result = Complex(0,0)#create object with passing of values to constructor
+
+        result.real = self.real + obj.real
+        result.img  = self.img + obj.img
+        return result
+    
+    def __sub__(self, obj):
+        #create Result object of complex class type
+        result = Complex()#create object without values passing
+
+        # #alternatively
+        # result = Complex(0,0)#create object with passing of values to constructor
+
+        result.real = self.real - obj.real
+        result.img  = self.img - obj.img
+        return result
+    
+num1 = Complex(1, 3)
+num1.showNumber()
+
+num2 = Complex(4, 6)
+num2.showNumber()
+
+# num3 = num1.add(num2)
+# num3.shownumber()
+
+num3 = num1 + num2
+num3.showNumber()
+
+num4 = Complex(3,5)
+num4.showNumber()
+
+num5 = num4 - num3
+num5.showNumber()
+
+
+class Circle:
+    def __init__(self,r):#radius r
+        self.r = r
+
+    @property#property decorator to dynamically update the values on value change of dependencies like r radius in this case
+    def Area(self):
+        return str((22/7) * self.r ** 2)
+        
+    @property
+    def perimeter(self):
+        return str(2 * (22/7) * self.r)
+
+c1 = Circle(21)
+print(c1.Area)
+print(c1.perimeter)
+
+class Employee:
+    def __init__(self, role, dept, salary):
+        self.role = role
+        self.dept = dept
+        self.salary = salary
+
+    def showDetails(self):
+        print("role = ", self.role)
+        print("dept = ", self.dept)
+        print("salary = ", self.salary)
+
+class Engineer(Employee):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        super().__init__("Engineer", "IT", "75,000")
+
+e1 = Employee("accountant", "Finance", "60000")
+e1.showDetails()
+
+engg1 = Engineer("Eyon Markus", 20)
+engg1.showDetails()
+
+
+class Order:
+    def __init__(self, item, price):
+        self.item = item
+        self.price = price
+    
+    def __gt__(self, odr2):#dunder function
+        return self.price > odr2.price
+    
+    
+    
+    def __lt__(self, odr2):
+        return self.price < odr2.price
+odr1 = Order("chips", 20)
+odr2 = Order("tea", 50)
+
+print(odr1 > odr2)
+print(odr1 < odr2)
